@@ -25,7 +25,7 @@ public class IOperations {
         return points;
     }
 
-    public static Polygon getPolygonVertexPointsFromFile(String polygonFilePath) {
+    public static Polygon getPolygonFromFile(String polygonFilePath) {
         File polygonFile = new File(polygonFilePath);
         ArrayList<Point> vertexPoints = new ArrayList<Point>();
 
@@ -46,7 +46,7 @@ public class IOperations {
     }
 
     // converts a string coordinate("x,y") to Point(x,y)
-    public static Point convertStringCoordinateToPoint(String coordinate) {
+    private static Point convertStringCoordinateToPoint(String coordinate) {
         String[] coordinateStringNumbers = coordinate.split(",");
         double x = Double.parseDouble(coordinateStringNumbers[0]);
         double y = Double.parseDouble(coordinateStringNumbers[1]);
@@ -54,11 +54,10 @@ public class IOperations {
         return point;
     }
 
-    public static void writeAnalysis(String analysisFilePath, String dataToBeWritten) {
+    public static void writeAnalysis(String analysisFilePath, ArrayList<PointStatus> analysisResult) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         File analysisFile = new File(analysisFilePath);
-        
         try {
             if (!analysisFile.exists()) {
                 analysisFile.createNewFile();
@@ -66,9 +65,81 @@ public class IOperations {
 
             fileWriter = new FileWriter(analysisFile);
             bufferedWriter = new BufferedWriter(fileWriter);
-            bufferedWriter.write(dataToBeWritten);
-            // bufferedWriter.write(polygon.pointToPolygonRelation(point).toString() +
-            // "\n");
+            for (PointStatus pointStatus : analysisResult) {
+                bufferedWriter.write(pointStatus + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedWriter != null)
+                    bufferedWriter.close();
+            } catch (Exception ex) {
+                System.out.println("Error in closing the BufferedWriter" + ex);
+            }
+        }
+    }
+
+    public static ArrayList<String> getAnalysis(String filePath) {
+        ArrayList<String> analysis = new ArrayList<String>();
+
+        File pointsFile = new File(filePath);
+        BufferedReader bufferedReader = null;
+        try {
+            bufferedReader = new BufferedReader(new FileReader(pointsFile));
+            String pointStatus;// holds x,y in string format "x,y"
+            while ((pointStatus = bufferedReader.readLine()) != null) {
+                analysis.add(pointStatus);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return analysis;
+    }
+
+    private static void persistPoints(ArrayList<Point> points) {
+
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        File analysisFile = new File("/home/getish/Desktop/upjs-1/points.txt");
+        try {
+            if (!analysisFile.exists()) {
+                analysisFile.createNewFile();
+            }
+
+            fileWriter = new FileWriter(analysisFile);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            for (Point point : points) {
+                bufferedWriter.write(point.x + "," + point.y + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (bufferedWriter != null)
+                    bufferedWriter.close();
+            } catch (Exception ex) {
+                System.out.println("Error in closing the BufferedWriter" + ex);
+            }
+        }
+    }
+
+    private static void persistPolygon(Polygon polygon) {
+
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        File analysisFile = new File("/home/getish/Desktop/upjs-1/points.txt");
+        try {
+            if (!analysisFile.exists()) {
+                analysisFile.createNewFile();
+            }
+
+            fileWriter = new FileWriter(analysisFile);
+            bufferedWriter = new BufferedWriter(fileWriter);
+            for (Point point : polygon.vertexPoints) {
+                bufferedWriter.write(point.x + "," + point.y + "\n");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
