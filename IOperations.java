@@ -54,10 +54,10 @@ public class IOperations {
         return point;
     }
 
-    public static void writeAnalysis(String analysisFilePath, ArrayList<PointStatus> analysisResult) {
+    public static void writeAnalysis(String path, ArrayList<PointStatus> analysisResult) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
-        File analysisFile = new File(analysisFilePath);
+        File analysisFile = new File(path);
         try {
             if (!analysisFile.exists()) {
                 analysisFile.createNewFile();
@@ -98,11 +98,11 @@ public class IOperations {
         return analysis;
     }
 
-    private static void persistPoints(ArrayList<Point> points) {
+    public static void persistPoints(String path, ArrayList<Point> points) {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
-        File analysisFile = new File("/home/getish/Desktop/upjs-1/points.txt");
+        File analysisFile = new File(path);
         try {
             if (!analysisFile.exists()) {
                 analysisFile.createNewFile();
@@ -125,11 +125,11 @@ public class IOperations {
         }
     }
 
-    private static void persistPolygon(Polygon polygon) {
+    public static void persistPolygon(Polygon polygon) {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
-        File analysisFile = new File("/home/getish/Desktop/upjs-1/points.txt");
+        File analysisFile = new File("/home/getish/Desktop/upjs-1/polygon.txt");
         try {
             if (!analysisFile.exists()) {
                 analysisFile.createNewFile();

@@ -22,13 +22,9 @@ public class Polygon {
     public PointStatus pointToPolygonRelation(Point point) {
         boolean leftSide = false;
         boolean rightSide = false;
-        // System.out.println("Point:" + point.x + " , " + point.y);
-        // System.out.println(vertexPoints);
+
         for (int i = 0; i < vertexPoints.size(); i++) {
             Point currentVertex = vertexPoints.get(i);
-            // System.out.println("Current vertex:" + currentVertex + " , " +
-            // currentVertex.y);
-
             Point nextVertex = i < vertexPoints.size() - 1 ? vertexPoints.get(i + 1) : vertexPoints.get(0);
 
             int currentSide = (int) ((point.y - currentVertex.y)
@@ -36,28 +32,25 @@ public class Polygon {
                     - (point.x - currentVertex.x)
                             * (nextVertex.y - currentVertex.y));
 
-            System.out.println(currentSide);
-
-            if (currentSide == 0) {
+            if (currentSide == 0) { // on border line
                 // check if the point is bounded between vertices
                 boolean boundedOnX = currentVertex.x <= point.x && point.x <= nextVertex.x;
                 boolean boundedOnY = currentVertex.y <= point.y && point.y <= nextVertex.y;
-                if (boundedOnX && boundedOnY) { // on border line
+                if (boundedOnX && boundedOnY) { // on border of polygon
                     return PointStatus.ON_BORDER_OF_POLYGON;
                 }
             }
 
-            if (currentSide < 0) { // right side
+            if (currentSide < 0) { // point is to right side of the tracing line
                 rightSide = true;
-            } else { // left side
+            } else { // point is to left side of the tracing line
                 leftSide = true;
             }
         }
 
-        // System.out.println("#############################");
         if (rightSide ^ leftSide) { // no direction change
             return PointStatus.INSIDE_POLYGON;
-        } else { // there is direction change
+        } else { // direction change
             return PointStatus.OUTSIDE_POLYGON;
         }
     }
