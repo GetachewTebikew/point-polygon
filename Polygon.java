@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 
 public class Polygon {
-    ArrayList<Point> vertexpPoints;
+    ArrayList<Point> vertexPoints;
+
     public Polygon(ArrayList<Point> vertexPoints) {
-        super();
-        this.vertexpPoints = vertexPoints;
+        this.vertexPoints = vertexPoints;
     }
 
     // A point is on the interior of this polygons if it is always
@@ -22,27 +22,42 @@ public class Polygon {
     public PointStatus pointToPolygonRelation(Point point) {
         boolean leftSide = false;
         boolean rightSide = false;
+        // System.out.println("Point:" + point.x + " , " + point.y);
+        // System.out.println(vertexPoints);
+        for (int i = 0; i < vertexPoints.size(); i++) {
+            Point currentVertex = vertexPoints.get(i);
+            // System.out.println("Current vertex:" + currentVertex + " , " +
+            // currentVertex.y);
 
-        for (int i = 0; i < vertexpPoints.size() - 1; i++) {
-            Point currentVertex = vertexpPoints.get(i);
-            Point nextVertex = vertexpPoints.get(i+1);
+            Point nextVertex = i < vertexPoints.size() - 1 ? vertexPoints.get(i + 1) : vertexPoints.get(0);
 
-            int currentSide = (int) ((point.y - currentVertex.y) * (nextVertex.x - currentVertex.x)
-                    - (point.x - currentVertex.x) * (nextVertex.y - currentVertex.y));
+            int currentSide = (int) ((point.y - currentVertex.y)
+                    * (nextVertex.x - currentVertex.x)
+                    - (point.x - currentVertex.x)
+                            * (nextVertex.y - currentVertex.y));
 
-            if (currentSide > 0) {
+            System.out.println(currentSide);
+
+            if (currentSide == 0) {
+                // check if the point is bounded between vertices
+                boolean boundedOnX = currentVertex.x <= point.x && point.x <= nextVertex.x;
+                boolean boundedOnY = currentVertex.y <= point.y && point.y <= nextVertex.y;
+                if (boundedOnX && boundedOnY) { // on border line
+                    return PointStatus.ON_BORDER_OF_POLYGON;
+                }
+            }
+
+            if (currentSide < 0) { // right side
                 rightSide = true;
-            } else if (currentSide == 0) {
-                return PointStatus.ON_BORDER_OF_POLYGON;
-            }else
-            {
+            } else { // left side
                 leftSide = true;
             }
         }
 
-        if ((rightSide == true && !leftSide) || (rightSide == false && leftSide)) {
+        // System.out.println("#############################");
+        if (rightSide ^ leftSide) { // no direction change
             return PointStatus.INSIDE_POLYGON;
-        } else {
+        } else { // there is direction change
             return PointStatus.OUTSIDE_POLYGON;
         }
     }
