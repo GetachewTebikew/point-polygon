@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 
 public abstract class AbstractTestPointToPolygonRelationshipWithOrWithoutFile {
+        String pointsFilePath = "/home/getish/Desktop/upjs-1/points.txt";
+        String polygonFilePath = "/home/getish/Desktop/upjs-1/polygon.txt";
+        String analysisFilePath = "/home/getish/Desktop/upjs-1/analysis.txt";
 
         Polygon getTriangle() {
                 ArrayList<Point> vertexPoints = new ArrayList<Point>() {
@@ -84,5 +87,17 @@ public abstract class AbstractTestPointToPolygonRelationshipWithOrWithoutFile {
                         }
                 };
                 return testPoints;
+        }
+
+        ArrayList<PointStatus> getAnalysisResults() {
+                ArrayList<PointStatus> pointStatus = new ArrayList<PointStatus>() {
+                        {
+                                add(PointStatus.INSIDE_POLYGON);
+                                add(PointStatus.OUTSIDE_POLYGON);
+                                add(PointStatus.ON_BORDER_OF_POLYGON);
+                        }
+                };
+                return pointStatus;
+
         }
 }

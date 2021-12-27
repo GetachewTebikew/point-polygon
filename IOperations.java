@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class IOperations {
+
     public static ArrayList<Point> getPointsFromFile(String pointsFilePath) {
         ArrayList<Point> points = new ArrayList<Point>();
         File pointsFile = new File(pointsFilePath);
@@ -43,7 +44,7 @@ public class IOperations {
         return point;
     }
 
-    public static void writeAnalysis(String path, ArrayList<PointStatus> analysisResult) {
+    public static boolean writeAnalysis(String path, ArrayList<PointStatus> analysisResult) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         File analysisFile = new File(path);
@@ -57,8 +58,10 @@ public class IOperations {
             for (PointStatus pointStatus : analysisResult) {
                 bufferedWriter.write(pointStatus + "\n");
             }
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         } finally {
             try {
                 if (bufferedWriter != null)
@@ -86,11 +89,12 @@ public class IOperations {
         return analysis;
     }
 
-    public static void persistPoints(String path, ArrayList<Point> points) {
+    public static boolean persistPoints(String path, ArrayList<Point> points) {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         File analysisFile = new File(path);
+
         try {
             if (!analysisFile.exists()) {
                 analysisFile.createNewFile();
@@ -101,8 +105,10 @@ public class IOperations {
             for (Point point : points) {
                 bufferedWriter.write(point.x + "," + point.y + "\n");
             }
+            return true;
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         } finally {
             try {
                 if (bufferedWriter != null)
@@ -113,8 +119,9 @@ public class IOperations {
         }
     }
 
-    public static void persistPolygon(Polygon polygon) {
-        persistPoints("/home/getish/Desktop/upjs-1/polygon.txt", polygon.vertexPoints);
+    public static boolean persistPolygon(String path, Polygon polygon) {
+        return persistPoints(path, polygon.vertexPoints);
+
     }
 
 }

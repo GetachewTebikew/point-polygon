@@ -6,4 +6,5 @@ public class Polygon {
     public Polygon(ArrayList<Point> vertexPoints) {
         this.vertexPoints = vertexPoints;
     }
+
 }
