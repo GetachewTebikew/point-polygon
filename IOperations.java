@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class IOperations {
-    public static ArrayList<Point> getTestPointsFromFile(String pointsFilePath) {
+    public static ArrayList<Point> getPointsFromFile(String pointsFilePath) {
         ArrayList<Point> points = new ArrayList<Point>();
         File pointsFile = new File(pointsFilePath);
         BufferedReader bufferedReader = null;
@@ -26,19 +26,8 @@ public class IOperations {
     }
 
     public static Polygon getPolygonFromFile(String polygonFilePath) {
-        File polygonFile = new File(polygonFilePath);
         ArrayList<Point> vertexPoints = new ArrayList<Point>();
-
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(polygonFile))) {
-            String coordinate;
-            while ((coordinate = bufferedReader.readLine()) != null) {
-                Point point = convertStringCoordinateToPoint(coordinate);
-                vertexPoints.add(point);
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        }
-
+        vertexPoints = getPointsFromFile(polygonFilePath);
         // construct a polygon from vertex points
         Polygon polygon = new Polygon(vertexPoints);
         return polygon;
@@ -82,7 +71,6 @@ public class IOperations {
 
     public static ArrayList<String> getAnalysis(String filePath) {
         ArrayList<String> analysis = new ArrayList<String>();
-
         File pointsFile = new File(filePath);
         BufferedReader bufferedReader = null;
         try {
@@ -126,30 +114,7 @@ public class IOperations {
     }
 
     public static void persistPolygon(Polygon polygon) {
-
-        FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
-        File analysisFile = new File("/home/getish/Desktop/upjs-1/polygon.txt");
-        try {
-            if (!analysisFile.exists()) {
-                analysisFile.createNewFile();
-            }
-
-            fileWriter = new FileWriter(analysisFile);
-            bufferedWriter = new BufferedWriter(fileWriter);
-            for (Point point : polygon.vertexPoints) {
-                bufferedWriter.write(point.x + "," + point.y + "\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (bufferedWriter != null)
-                    bufferedWriter.close();
-            } catch (Exception ex) {
-                System.out.println("Error in closing the BufferedWriter" + ex);
-            }
-        }
+        persistPoints("/home/getish/Desktop/upjs-1/polygon.txt", polygon.vertexPoints);
     }
 
 }
