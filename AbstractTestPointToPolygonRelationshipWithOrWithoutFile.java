@@ -1,9 +1,34 @@
+import java.io.File;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+
 public abstract class AbstractTestPointToPolygonRelationshipWithOrWithoutFile {
-        String pointsFilePath = "/home/getish/Desktop/upjs-1/points.txt";
-        String polygonFilePath = "/home/getish/Desktop/upjs-1/polygon.txt";
-        String analysisFilePath = "/home/getish/Desktop/upjs-1/analysis.txt";
+        final String pointsFilePath = "points.txt";
+        final String polygonFilePath = "polygon.txt";
+        final String analysisFilePath = "analysis.txt";
+        File pointsFile;
+        File polygonFile;
+        File analysisFile;
+
+        @BeforeAll
+        protected void setUp() throws Exception {
+                System.out.println("Creating files...");
+                pointsFile = new File(pointsFilePath);
+                pointsFile = new File(pointsFilePath);
+                pointsFile = new File(pointsFilePath);
+
+        }
+
+        @AfterAll
+        protected void tearDown() throws Exception {
+                System.out.println("Deleting files.....");
+                deleteFile(pointsFile);
+                deleteFile(polygonFile);
+                deleteFile(analysisFile);
+
+        }
 
         Polygon getTriangle() {
                 ArrayList<Point> vertexPoints = new ArrayList<Point>() {
@@ -99,5 +124,13 @@ public abstract class AbstractTestPointToPolygonRelationshipWithOrWithoutFile {
                 };
                 return pointStatus;
 
+        }
+
+        void deleteFile(File file) {
+                if (file.delete()) {
+                        System.out.println("Deleted the file: " + file.getName());
+                } else {
+                        System.out.println("Failed to delete the file." + file.getName());
+                }
         }
 }

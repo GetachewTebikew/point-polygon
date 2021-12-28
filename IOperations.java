@@ -93,14 +93,14 @@ public class IOperations {
 
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
-        File analysisFile = new File(path);
+        File pointsFile = new File(path);
 
         try {
-            if (!analysisFile.exists()) {
-                analysisFile.createNewFile();
+            if (!pointsFile.exists()) {
+                pointsFile.createNewFile();
             }
 
-            fileWriter = new FileWriter(analysisFile);
+            fileWriter = new FileWriter(pointsFile);
             bufferedWriter = new BufferedWriter(fileWriter);
             for (Point point : points) {
                 bufferedWriter.write(point.x + "," + point.y + "\n");

@@ -10,7 +10,7 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
     @Test
     public void testTriangleFromFile() {
         IOperations.persistPolygon(polygonFilePath, getTriangle());
-        IOperations.persistPoints("",
+        IOperations.persistPoints(pointsFilePath,
                 getTriangleTestPoints());
         ArrayList<Point> testPoints = IOperations
                 .getPointsFromFile(pointsFilePath);
@@ -24,7 +24,7 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
 
-        assertEquals(getAnalysisResults(), IOperations.getAnalysis(analysisFilePath));
+        assertEquals(getAnalysisResults().toString(), IOperations.getAnalysis(analysisFilePath).toString());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
 
-        assertEquals(getAnalysisResults(), IOperations.getAnalysis(analysisFilePath));
+        assertEquals(getAnalysisResults().toString(), IOperations.getAnalysis(analysisFilePath).toString());
     }
 
     @Test
@@ -65,6 +65,6 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
 
-        assertEquals(getAnalysisResults(), IOperations.getAnalysis(analysisFilePath));
+        assertEquals(getAnalysisResults().toString(), IOperations.getAnalysis(analysisFilePath).toString());
     }
 }
