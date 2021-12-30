@@ -16,15 +16,15 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
                 .getPointsFromFile(pointsFilePath);
         Polygon triangle = IOperations.getPolygonFromFile(polygonFilePath);
 
-        ArrayList<PointStatus> analysis = new ArrayList<PointStatus>();
+        ArrayList<String> analysis = new ArrayList<String>();
         for (Point point : testPoints) {
             PointStatus status = PointToPolygonRelationship.pointToPolygonRelation(point, triangle);
-            analysis.add(status);
+            analysis.add(status.toString());
         }
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
 
-        assertEquals(getAnalysisResults().toString(), IOperations.getAnalysis(analysisFilePath).toString());
+        assertEquals(getAnalysisResults(), IOperations.getAnalysis(analysisFilePath));
     }
 
     @Test
@@ -36,15 +36,15 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
                 .getPointsFromFile(pointsFilePath);
         Polygon rectangle = IOperations.getPolygonFromFile(polygonFilePath);
 
-        ArrayList<PointStatus> analysis = new ArrayList<PointStatus>();
+        ArrayList<String> analysis = new ArrayList<String>();
         for (Point point : testPoints) {
             PointStatus status = PointToPolygonRelationship.pointToPolygonRelation(point, rectangle);
-            analysis.add(status);
+            analysis.add(status.toString());
         }
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
 
-        assertEquals(getAnalysisResults().toString(), IOperations.getAnalysis(analysisFilePath).toString());
+        assertEquals(getAnalysisResults(), IOperations.getAnalysis(analysisFilePath));
     }
 
     @Test
@@ -56,15 +56,17 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
                 .getPointsFromFile(pointsFilePath);
         Polygon octagon = IOperations.getPolygonFromFile(polygonFilePath);
 
-        ArrayList<PointStatus> analysis = new ArrayList<PointStatus>();
+        ArrayList<String> analysis = new ArrayList<String>();
         for (Point point : testPoints) {
             PointStatus status = PointToPolygonRelationship.pointToPolygonRelation(point, octagon);
-            analysis.add(status);
+            analysis.add(status.toString());
             System.out.println(status);
         }
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
 
-        assertEquals(getAnalysisResults().toString(), IOperations.getAnalysis(analysisFilePath).toString());
+        ArrayList<String> expectedPointStatuses = getAnalysisResults();
+        assertEquals(expectedPointStatuses, IOperations.getAnalysis(analysisFilePath));
+
     }
 }

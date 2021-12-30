@@ -5,9 +5,15 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
 public abstract class AbstractTestPointToPolygonRelationshipWithOrWithoutFile {
-        final String pointsFilePath = "points.txt";
-        final String polygonFilePath = "polygon.txt";
-        final String analysisFilePath = "analysis.txt";
+
+        String property = "java.io.tmpdir";
+
+        // Get the temporary directory
+        // String tempDir = System.getProperty(property);
+        String tempDir = System.getenv(property);
+        final String pointsFilePath = tempDir + "points.txt";
+        final String polygonFilePath = tempDir + "polygon.txt";
+        final String analysisFilePath = tempDir + "analysis.txt";
         File pointsFile;
         File polygonFile;
         File analysisFile;
@@ -114,12 +120,12 @@ public abstract class AbstractTestPointToPolygonRelationshipWithOrWithoutFile {
                 return testPoints;
         }
 
-        ArrayList<PointStatus> getAnalysisResults() {
-                ArrayList<PointStatus> pointStatus = new ArrayList<PointStatus>() {
+        ArrayList<String> getAnalysisResults() {
+                ArrayList<String> pointStatus = new ArrayList<String>() {
                         {
-                                add(PointStatus.INSIDE_POLYGON);
-                                add(PointStatus.OUTSIDE_POLYGON);
-                                add(PointStatus.ON_BORDER_OF_POLYGON);
+                                add("INSIDE_POLYGON");
+                                add("OUTSIDE_POLYGON");
+                                add("ON_BORDER_OF_POLYGON");
                         }
                 };
                 return pointStatus;

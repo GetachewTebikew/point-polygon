@@ -44,7 +44,7 @@ public class IOperations {
         return point;
     }
 
-    public static boolean writeAnalysis(String path, ArrayList<PointStatus> analysisResult) {
+    public static boolean writeAnalysis(String path, ArrayList<String> analysisResult) {
         FileWriter fileWriter = null;
         BufferedWriter bufferedWriter = null;
         File analysisFile = new File(path);
@@ -55,7 +55,7 @@ public class IOperations {
 
             fileWriter = new FileWriter(analysisFile);
             bufferedWriter = new BufferedWriter(fileWriter);
-            for (PointStatus pointStatus : analysisResult) {
+            for (String pointStatus : analysisResult) {
                 bufferedWriter.write(pointStatus + "\n");
             }
             return true;
