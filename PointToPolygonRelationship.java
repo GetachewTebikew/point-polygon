@@ -11,7 +11,7 @@ public class PointToPolygonRelationship {
     // if greater than 0 it is to the left, if equal to 0 then it lies on the line
     // segment
 
-    public static PointStatus pointToPolygonRelation(Point point, Polygon polygon) {
+    public static String pointToPolygonRelation(Point point, Polygon polygon) {
         boolean leftSide = false;
         boolean rightSide = false;
 
@@ -29,7 +29,7 @@ public class PointToPolygonRelationship {
                 boolean boundedOnX = currentVertex.x <= point.x && point.x <= nextVertex.x;
                 boolean boundedOnY = currentVertex.y <= point.y && point.y <= nextVertex.y;
                 if (boundedOnX && boundedOnY) { // on border of polygon
-                    return PointStatus.ON_BORDER_OF_POLYGON;
+                    return PointStatus.ON_BORDER_OF_POLYGON.toString();
                 }
             }
 
@@ -41,9 +41,9 @@ public class PointToPolygonRelationship {
         }
 
         if (rightSide ^ leftSide) { // no direction change
-            return PointStatus.INSIDE_POLYGON;
+            return PointStatus.INSIDE_POLYGON.toString();
         } else { // direction change
-            return PointStatus.OUTSIDE_POLYGON;
+            return PointStatus.OUTSIDE_POLYGON.toString();
         }
     }
 }

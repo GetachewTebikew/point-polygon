@@ -18,8 +18,8 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
 
         ArrayList<String> analysis = new ArrayList<String>();
         for (Point point : testPoints) {
-            PointStatus status = PointToPolygonRelationship.pointToPolygonRelation(point, triangle);
-            analysis.add(status.toString());
+            String status = PointToPolygonRelationship.pointToPolygonRelation(point, triangle);
+            analysis.add(status);
         }
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
@@ -38,8 +38,8 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
 
         ArrayList<String> analysis = new ArrayList<String>();
         for (Point point : testPoints) {
-            PointStatus status = PointToPolygonRelationship.pointToPolygonRelation(point, rectangle);
-            analysis.add(status.toString());
+            String status = PointToPolygonRelationship.pointToPolygonRelation(point, rectangle);
+            analysis.add(status);
         }
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
@@ -58,9 +58,8 @@ public class TestPointToPolygonRelationshipUsingFilesInTempDirectory
 
         ArrayList<String> analysis = new ArrayList<String>();
         for (Point point : testPoints) {
-            PointStatus status = PointToPolygonRelationship.pointToPolygonRelation(point, octagon);
-            analysis.add(status.toString());
-            System.out.println(status);
+            String status = PointToPolygonRelationship.pointToPolygonRelation(point, octagon);
+            analysis.add(status);
         }
 
         IOperations.writeAnalysis(analysisFilePath, analysis);
